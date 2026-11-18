@@ -19,13 +19,13 @@
     }
     .card {
       width: 100%;
-      max-width: 450px;
+      max-width: 460px;
       margin: 0 auto;
       background: #ffffff;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 22px 20px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      border-top: 5px solid #0f766e;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.42);
+      border-top: 6px solid #0f766e;
     }
     .brand-tag {
       text-align: center;
@@ -37,7 +37,7 @@
       margin-bottom: 4px;
     }
     h2 {
-      margin: 0 0 6px 0;
+      margin: 0 0 4px 0;
       color: #0f766e;
       text-align: center;
       font-size: 21px;
@@ -47,16 +47,38 @@
       text-align: center;
       color: #64748b;
       font-size: 13px;
-      margin: 0 0 16px 0;
+      margin: 0 0 14px 0;
+    }
+    .steps-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .step-pill {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1.5px solid #e2e8f0;
+    }
+    .step-pill.activo {
+      background: #f0fdf4;
+      color: #0f766e;
+      border-color: #0f766e;
     }
     label {
       display: block;
       font-weight: 700;
       font-size: 13px;
-      margin: 12px 0 5px;
+      margin: 11px 0 5px;
       color: #334155;
     }
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 11px 12px;
       border: 1.5px solid #cbd5e1;
@@ -65,8 +87,9 @@
       color: #0f172a;
       background: #f8fafc;
       outline: none;
+      font-family: inherit;
     }
-    input:focus {
+    input:focus, textarea:focus {
       border-color: #0f766e;
       background: #ffffff;
     }
@@ -77,20 +100,21 @@
     }
     .empresas-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
       margin-top: 6px;
     }
     .emp-btn {
-      padding: 11px 8px;
+      padding: 11px 6px;
       border: 2px solid #e2e8f0;
       border-radius: 10px;
       background: #ffffff;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 13px;
+      font-weight: 800;
+      font-size: 12px;
       text-align: center;
       color: #475569;
+      transition: all 0.15s;
     }
     .emp-btn.activo {
       border-color: #0f766e;
@@ -140,7 +164,7 @@
       border-radius: 999px;
       font-size: 11px;
     }
-    .btn-submit {
+    .btn-primary {
       width: 100%;
       padding: 14px;
       background: #0f766e;
@@ -150,10 +174,53 @@
       font-weight: 800;
       font-size: 15px;
       cursor: pointer;
-      margin-top: 18px;
+      margin-top: 16px;
       box-shadow: 0 4px 12px rgba(15, 118, 110, 0.28);
     }
-    .btn-submit:hover { background: #0d9488; }
+    .btn-primary:hover { background: #0d9488; }
+    .btn-gps {
+      width: 100%;
+      padding: 11px 12px;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .btn-gps.capturado {
+      background: #16a34a;
+    }
+    .info-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 600;
+      background: #eff6ff;
+      color: #1e3a8a;
+      border: 1px solid #bfdbfe;
+    }
+    .user-verified-bar {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      color: #166534;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     #alerta {
       margin-top: 12px;
       padding: 11px;
@@ -162,81 +229,180 @@
       font-weight: 700;
       text-align: center;
       display: none;
+      line-height: 1.4;
     }
+    .map-frame {
+      width: 100%;
+      height: 155px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      margin-top: 8px;
+      display: none;
+    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="card" id="cardPrincipal">
     <div class="brand-tag">🌸 Maison de Fiore — La Casa de Flor</div>
     <h2>📦 Programa tu Envío</h2>
-    <p class="sub">Completa tus datos exactos para el despacho de tu paquete.</p>
+    <p class="sub">Registra tus datos para alistar y despachar tu paquete.</p>
 
-    <div class="grid-2">
-      <div>
-        <label>DNI (8 dígitos):</label>
-        <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)">
-      </div>
-      <div>
-        <label>Celular (9 dígitos):</label>
-        <input type="tel" id="celular" placeholder="9 dígitos" oninput="this.value=limpiarCelularWeb(this.value)">
-      </div>
+    <div class="steps-bar">
+      <div id="pill-paso1" class="step-pill activo">1. Tus Datos</div>
+      <div id="pill-paso2" class="step-pill">2. Modalidad y Envío</div>
     </div>
 
-    <label>Nombre y Apellidos Completos:</label>
-    <input type="text" id="nombre" placeholder="Ej: María Flores Pérez">
-
-    <label>1. Modalidad / Agencia:</label>
-    <div class="empresas-grid">
-      <div class="emp-btn activo" onclick="elegirEmpresa('Shalom', this)">🚚 Shalom</div>
-      <div class="emp-btn" onclick="elegirEmpresa('Olva Courier', this)">📦 Olva Courier</div>
-      <div class="emp-btn" onclick="elegirEmpresa('Agencia Texac', this)">🚌 Texac</div>
-      <div class="emp-btn" onclick="elegirEmpresa('Huánuco Domicilio', this)">🛵 Domicilio</div>
-    </div>
-
-    <div id="bloqueShalom" style="margin-top:8px;">
-      <label>Sede / Agencia Shalom:</label>
-      <input list="sL" id="destinoShalom" placeholder="Escribe o elige tu sede...">
-      <datalist id="sL">
-        <option value="Huánuco - Agencia Principal (Jr. Aguilar)">
-        <option value="Huánuco - Jr. Mayro">
-        <option value="Tingo María - Agencia Shalom">
-        <option value="Lima - La Victoria (Bauzate y Meza)">
-        <option value="Lima - Los Olivos (Pro)">
-        <option value="Lima - Independencia (MegaPlaza)">
-        <option value="Lima - San Juan de Lurigancho (Las Flores)">
-      </datalist>
-    </div>
-
-    <div id="bloqueOtro" style="display:none; margin-top:8px;">
-      <label id="lblDestinoOtro">Dirección Exacta y Referencia:</label>
-      <input type="text" id="destinoOtro" placeholder="Ciudad, dirección y referencia...">
-    </div>
-
-    <label>2. Día de Despacho:</label>
-    <div class="dias-box">
-      <div class="dia-opcion activo" onclick="elegirDia('Lunes', false, this)">
-        <span>📅 Lunes (Despacho Normal)</span>
-        <span class="badge-gratis">Gratis</span>
+    <!-- ================================================================= -->
+    <!-- PASO 1: IDENTIFICACIÓN Y VERIFICACIÓN CON DOBLE INTENTO           -->
+    <!-- ================================================================= -->
+    <div id="seccionPaso1">
+      <div class="grid-2">
+        <div>
+          <label>DNI (8 dígitos):</label>
+          <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="reiniciarIntentoSiCambia(); this.value=this.value.replace(/\D/g,'').slice(0,8)">
+        </div>
+        <div>
+          <label>Celular (9 dígitos):</label>
+          <input type="tel" id="celular" placeholder="9 dígitos" oninput="reiniciarIntentoSiCambia(); this.value=limpiarCelularWeb(this.value)">
+        </div>
       </div>
-      <div class="dia-opcion" onclick="elegirDia('Jueves', false, this)">
-        <span>📅 Jueves (Despacho Normal)</span>
-        <span class="badge-gratis">Gratis</span>
-      </div>
-      <div class="dia-opcion urgente" onclick="elegirDia('Emergencia', true, this)">
-        <span>🚨 Emergencia (Otro día)</span>
-        <span class="badge-urgente">+ S/ 8.00</span>
-      </div>
+
+      <label>Nombre y Apellidos Completos (o Usuario):</label>
+      <input type="text" id="nombre" placeholder="Ej: María Flores Pérez" oninput="reiniciarIntentoSiCambia()">
+
+      <button type="button" class="btn-primary" id="btnVerificar" onclick="verificarDatosPaso1()">🔍 Confirmar mis Datos</button>
     </div>
 
-    <button type="button" class="btn-submit" id="btnEnviar" onclick="confirmarEnvio()">✅ Confirmar y Enviar</button>
+    <!-- ================================================================= -->
+    <!-- PASO 2: MODALIDAD, DIRECCIÓN / GPS Y DÍA DE DESPACHO              -->
+    <!-- ================================================================= -->
+    <div id="seccionPaso2" class="hidden">
+      <div class="user-verified-bar">
+        <span id="txtResumenCliente">👤 Clienta verificada</span>
+        <button type="button" onclick="volverAPaso1()" style="background:transparent;border:none;color:#0f766e;font-weight:800;cursor:pointer;text-decoration:underline;font-size:11px;">Editar</button>
+      </div>
+
+      <label>1. Elige la Modalidad de Envío:</label>
+      <div class="empresas-grid">
+        <div class="emp-btn activo" onclick="elegirEmpresa('Shalom', this)">🚚 Shalom</div>
+        <div class="emp-btn" onclick="elegirEmpresa('Olva Courier', this)">📦 Olva Courier</div>
+        <div class="emp-btn" onclick="elegirEmpresa('Delivery Huánuco', this)">🛵 Delivery Huánuco</div>
+      </div>
+
+      <!-- OPCIÓN A: SHALOM -->
+      <div id="bloqueShalom" style="margin-top:8px;">
+        <label>Sede / Agencia Shalom de Destino:</label>
+        <input list="sL" id="destinoShalom" placeholder="Escribe tu ciudad o elige tu agencia Shalom...">
+        <datalist id="sL">
+          <option value="Lima - La Victoria (Bauzate y Meza)">
+          <option value="Lima - Los Olivos (Pro)">
+          <option value="Lima - Independencia (MegaPlaza)">
+          <option value="Lima - San Juan de Lurigancho (Las Flores)">
+          <option value="Lima - San Juan de Miraflores (Atocongo)">
+          <option value="Lima - Ate Vitarte (Ceres)">
+          <option value="Tingo María - Agencia Shalom">
+          <option value="Pucallpa - Agencia Principal">
+          <option value="Huancayo - Agencia Principal">
+          <option value="Cerro de Pasco - Agencia Shalom">
+          <option value="Arequipa - Agencia Principal">
+          <option value="Trujillo - Agencia Principal">
+          <option value="Chiclayo - Agencia Principal">
+          <option value="Piura - Agencia Principal">
+          <option value="Cusco - Agencia Principal">
+          <option value="Ica - Agencia Principal">
+          <option value="Chimbote - Agencia Principal">
+          <option value="Tacna - Agencia Principal">
+        </datalist>
+      </div>
+
+      <!-- OPCIÓN B: OLVA COURIER -->
+      <div id="bloqueOlva" class="hidden" style="margin-top:8px;">
+        <label>Departamento, Provincia y Distrito:</label>
+        <input type="text" id="olvaUbigeo" placeholder="Ej: Lima - Lima - Miraflores">
+        <label>Dirección Exacta (o Sede Olva si recoges en oficina):</label>
+        <input type="text" id="olvaDireccion" placeholder="Av. / Calle / Número / Referencia...">
+        <div class="info-box">
+          📦 <b>Nota Olva Courier:</b> La tarifa exacta de envío de Olva depende del peso y destino, y te la confirmaremos por WhatsApp antes del despacho.
+        </div>
+      </div>
+
+      <!-- OPCIÓN C: DELIVERY HUÁNUCO (GPS EN TIEMPO REAL + DIRECCIÓN) -->
+      <div id="bloqueHuanuco" class="hidden" style="margin-top:8px;">
+        <label>Ubicación en Tiempo Real (Opcional pero recomendado):</label>
+        <button type="button" id="btnGps" class="btn-gps" onclick="capturarUbicacionGPS()">
+          📍 Enviar mi Ubicación Actual (Google Maps)
+        </button>
+        <iframe id="mapaPreview" class="map-frame" loading="lazy"></iframe>
+
+        <label>Dirección Exacta en Huánuco (Jr. / Calle / Número):</label>
+        <input type="text" id="huanucoDireccion" placeholder="Ej: Jr. Dos de Mayo 1240 - Huánuco">
+
+        <label>Referencia (Color de casa, portón, frente a qué está):</label>
+        <input type="text" id="huanucoReferencia" placeholder="Ej: Casa de 2 pisos portón negro, frente al parque...">
+
+        <div class="info-box">
+          🛵 <b>Delivery en Huánuco:</b> Al finalizar, coordinaremos directamente contigo por WhatsApp la <b>tarifa según tu zona y la hora exacta</b> de entrega.
+        </div>
+      </div>
+
+      <!-- PASO 3: DÍA DE DESPACHO (SOLO PARA SHALOM Y OLVA) -->
+      <div id="bloqueDiasAgencia" style="margin-top:12px;">
+        <label>2. Elige tu Día de Despacho:</label>
+        <div class="dias-box">
+          <div class="dia-opcion activo" onclick="elegirDia('Martes', false, this)">
+            <span>📅 Martes (Despacho Normal)</span>
+            <span class="badge-gratis">Gratis</span>
+          </div>
+          <div class="dia-opcion" onclick="elegirDia('Jueves', false, this)">
+            <span>📅 Jueves (Despacho Normal)</span>
+            <span class="badge-gratis">Gratis</span>
+          </div>
+          <div class="dia-opcion urgente" onclick="elegirDia('Emergencia (Otro día)', true, this)">
+            <span>🚨 Emergencia (Otro día)</span>
+            <span class="badge-urgente">+ S/ 8.00</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" id="btnEnviar" onclick="guardarYEnviarWhatsApp()">
+        ✅ Guardar y Enviar a WhatsApp
+      </button>
+    </div>
+
     <div id="alerta"></div>
   </div>
 
-  <script>
-    // ⚠️ AQUÍ DEBES PEGAR TU ENLACE /EXEC ENTRE LAS COMILLAS:
-    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbyF8r6u7QVXjxP58SyBnZ6UI-3IHUVQ1H_xzxIYKgBv4VyWSsEAdZTVBVKB1teMRbaSOg/exec';
+  <!-- PANTALLA FINAL DE CIERRE -->
+  <div class="card hidden" id="cardFinalizado" style="text-align:center; padding: 34px 22px;">
+    <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+    <h2 style="color:#16a34a;">¡Envío Registrado con Éxito!</h2>
+    <p style="color:#334155; font-size:14px; line-height:1.5; margin: 12px 0 20px;">
+      Tus datos ya quedaron guardados en el sistema de <b>Maison de Fiore</b> y te estamos redirigiendo a nuestro WhatsApp para confirmar tu despacho.
+    </p>
+    <a id="btnReabrirWsp" href="#" target="_blank" class="btn-primary" style="display:block; text-decoration:none; background:#16a34a;">
+      📲 Abrir WhatsApp Ahora
+    </a>
+    <p style="color:#64748b; font-size:12px; margin-top:16px;">Ya puedes cerrar esta ventana.</p>
+  </div>
 
-    let empE = 'Shalom', diaS = 'Lunes', esU = false, enviando = false;
+  <script>
+    // URL OFICIAL /EXEC DE TU GOOGLE APPS SCRIPT:
+    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbyF8r6u7QVXjxP58SyBnZ6UI-3IHUVQ1H_xzxIYKgBv4VyWSsEAdZTVBVKB1teMRbaSOg/exec';
+    // Si deseas dejar un número de WhatsApp fijo de respaldo (9 dígitos), colócalo aquí; si está vacío usa el configurado en tu Excel:
+    const WSP_TIENDA_RESPALDO = '';
+
+    let intentosVerificacion = 0;
+    let claveUltimoIntento = '';
+    let clienteVerificadoEnExcel = false;
+    let nombreOficialDetectado = '';
+    let wspTiendaBackend = '';
+
+    let empE = 'Shalom';
+    let diaS = 'Martes';
+    let esU = false;
+    let gpsLinkCapturado = '';
+    let enviando = false;
 
     function limpiarCelularWeb(val) {
       let s = String(val || '').trim().replace(/^\+?\s*51[\s\-]*/, '').replace(/\D/g, '');
@@ -244,12 +410,128 @@
       return s.slice(0, 9);
     }
 
+    function mostrarAlerta(t, tipo) {
+      const a = document.getElementById('alerta');
+      a.innerText = t;
+      a.style.display = 'block';
+      if (tipo === 'error') {
+        a.style.background = '#fee2e2';
+        a.style.color = '#991b1b';
+        a.style.border = '1px solid #fca5a5';
+      } else if (tipo === 'warn') {
+        a.style.background = '#fef3c7';
+        a.style.color = '#92400e';
+        a.style.border = '1px solid #fcd34d';
+      } else {
+        a.style.background = '#dcfce7';
+        a.style.color = '#14532d';
+        a.style.border = '1px solid #86efac';
+      }
+    }
+
+    function ocultarAlerta() {
+      document.getElementById('alerta').style.display = 'none';
+    }
+
+    function reiniciarIntentoSiCambia() {
+      ocultarAlerta();
+    }
+
+    async function verificarDatosPaso1() {
+      const dni = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
+      const cel = limpiarCelularWeb(document.getElementById('celular').value);
+      const nom = document.getElementById('nombre').value.trim();
+
+      if (!/^\d{8}$/.test(dni)) return mostrarAlerta('⚠️ El DNI debe tener exactamente 8 números.', 'error');
+      if (!/^9\d{8}$/.test(cel)) return mostrarAlerta('⚠️ El celular debe tener 9 dígitos y empezar con 9.', 'error');
+      if (!nom || nom.length < 3) return mostrarAlerta('⚠️ Ingresa tu nombre y apellidos completos.', 'error');
+
+      const claveActual = `${dni}|${cel}|${nom.toLowerCase()}`;
+      if (claveActual !== claveUltimoIntento) {
+        intentosVerificacion = 0;
+        claveUltimoIntento = claveActual;
+      }
+
+      const btn = document.getElementById('btnVerificar');
+      btn.disabled = true;
+      btn.innerText = '⏳ Verificando en el sistema...';
+      ocultarAlerta();
+
+      try {
+        const resp = await fetch(URL_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            accion: 'verificar',
+            dni: dni,
+            celular: cel,
+            nombreCompleto: nom
+          })
+        });
+
+        const data = await resp.json();
+        btn.disabled = false;
+        btn.innerText = '🔍 Confirmar mis Datos';
+
+        if (data && data.wspTienda) wspTiendaBackend = String(data.wspTienda).replace(/\D/g, '');
+
+        if (data && data.encontrado) {
+          clienteVerificadoEnExcel = true;
+          nombreOficialDetectado = data.clienteOficial || nom;
+          pasarAPaso2(`✅ Verificada: ${nombreOficialDetectado}`);
+        } else {
+          intentosVerificacion++;
+          if (intentosVerificacion === 1) {
+            mostrarAlerta('⚠️ No encontramos tu registro con estos datos. Por favor, revisa que tu DNI, celular o nombre estén bien escritos y presiona "Confirmar mis Datos" nuevamente.', 'warn');
+            btn.innerText = '✔️ Mis datos están correctos (Continuar)';
+          } else {
+            clienteVerificadoEnExcel = false;
+            nombreOficialDetectado = nom;
+            pasarAPaso2(`👤 Clienta: ${nom}`);
+          }
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerText = '🔍 Confirmar mis Datos';
+        intentosVerificacion++;
+        if (intentosVerificacion === 1) {
+          mostrarAlerta('⚠️ Revisa que tu DNI, celular y nombre estén bien escritos y vuelve a tocar el botón para continuar.', 'warn');
+          btn.innerText = '✔️ Mis datos están correctos (Continuar)';
+        } else {
+          clienteVerificadoEnExcel = false;
+          nombreOficialDetectado = nom;
+          pasarAPaso2(`👤 Clienta: ${nom}`);
+        }
+      }
+    }
+
+    function pasarAPaso2(textoBarra) {
+      ocultarAlerta();
+      document.getElementById('seccionPaso1').classList.add('hidden');
+      document.getElementById('seccionPaso2').classList.remove('hidden');
+      document.getElementById('pill-paso1').classList.remove('activo');
+      document.getElementById('pill-paso2').classList.add('activo');
+      document.getElementById('txtResumenCliente').innerText = textoBarra;
+    }
+
+    function volverAPaso1() {
+      ocultarAlerta();
+      document.getElementById('seccionPaso2').classList.add('hidden');
+      document.getElementById('seccionPaso1').classList.remove('hidden');
+      document.getElementById('pill-paso2').classList.remove('activo');
+      document.getElementById('pill-paso1').classList.add('activo');
+    }
+
     function elegirEmpresa(e, el) {
       empE = e;
       document.querySelectorAll('.emp-btn').forEach(b => b.classList.remove('activo'));
       el.classList.add('activo');
-      document.getElementById('bloqueShalom').style.display = e === 'Shalom' ? 'block' : 'none';
-      document.getElementById('bloqueOtro').style.display = e === 'Shalom' ? 'none' : 'block';
+
+      document.getElementById('bloqueShalom').classList.toggle('hidden', e !== 'Shalom');
+      document.getElementById('bloqueOlva').classList.toggle('hidden', e !== 'Olva Courier');
+      document.getElementById('bloqueHuanuco').classList.toggle('hidden', e !== 'Delivery Huánuco');
+      document.getElementById('bloqueDiasAgencia').classList.toggle('hidden', e === 'Delivery Huánuco');
+      ocultarAlerta();
     }
 
     function elegirDia(d, u, el) {
@@ -259,61 +541,140 @@
       el.classList.add('activo');
     }
 
-    function mostrarAlerta(t, err) {
-      const a = document.getElementById('alerta');
-      a.innerText = t;
-      a.style.display = 'block';
-      a.style.background = err ? '#fee2e2' : '#dcfce7';
-      a.style.color = err ? '#991b1b' : '#14532d';
+    function capturarUbicacionGPS() {
+      const btn = document.getElementById('btnGps');
+      if (!navigator.geolocation) {
+        return mostrarAlerta('⚠️ Tu navegador no permite usar GPS. Escribe tu dirección y referencia abajo.', 'warn');
+      }
+      btn.disabled = true;
+      btn.innerText = '📡 Obteniendo tu ubicación exacta...';
+
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude.toFixed(6);
+          const lng = pos.coords.longitude.toFixed(6);
+          gpsLinkCapturado = `https://maps.google.com/?q=${lat},${lng}`;
+          btn.disabled = false;
+          btn.classList.add('capturado');
+          btn.innerText = '✅ Ubicación GPS Capturada en Tiempo Real';
+
+          const mapa = document.getElementById('mapaPreview');
+          mapa.src = `https://maps.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
+          mapa.style.display = 'block';
+          ocultarAlerta();
+        },
+        err => {
+          btn.disabled = false;
+          btn.innerText = '📍 Reintentar Ubicación Actual (Google Maps)';
+          mostrarAlerta('⚠️ Activa la ubicación/GPS de tu celular y dale a "Permitir", o escribe tu dirección exacta abajo.', 'warn');
+        },
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+      );
     }
 
-    function confirmarEnvio() {
+    async function guardarYEnviarWhatsApp() {
       if (enviando) return;
       const dni = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
       const cel = limpiarCelularWeb(document.getElementById('celular').value);
       const nom = document.getElementById('nombre').value.trim();
-      const dest = empE === 'Shalom'
-        ? document.getElementById('destinoShalom').value.trim()
-        : document.getElementById('destinoOtro').value.trim();
 
-      if (!/^\d{8}$/.test(dni)) return mostrarAlerta('⚠️ El DNI debe tener exactamente 8 números.', true);
-      if (!/^9\d{8}$/.test(cel)) return mostrarAlerta('⚠️ El celular debe tener 9 números y empezar con 9.', true);
-      if (!nom || nom.length < 3) return mostrarAlerta('⚠️ Ingresa tu nombre y apellidos completos.', true);
-      if (!dest) return mostrarAlerta('⚠️ Indica la sede o dirección exacta de destino.', true);
+      let destinoFinal = '';
+      if (empE === 'Shalom') {
+        destinoFinal = document.getElementById('destinoShalom').value.trim();
+        if (!destinoFinal) return mostrarAlerta('⚠️ Escribe o selecciona la sede de Shalom de destino.', 'error');
+      } else if (empE === 'Olva Courier') {
+        const ubi = document.getElementById('olvaUbigeo').value.trim();
+        const dir = document.getElementById('olvaDireccion').value.trim();
+        if (!ubi || !dir) return mostrarAlerta('⚠️ Completa tu Ciudad/Distrito y tu Dirección exacta para Olva Courier.', 'error');
+        destinoFinal = `${ubi} - ${dir}`;
+      } else if (empE === 'Delivery Huánuco') {
+        const dirH = document.getElementById('huanucoDireccion').value.trim();
+        const refH = document.getElementById('huanucoReferencia').value.trim();
+        if (!dirH && !gpsLinkCapturado) {
+          return mostrarAlerta('⚠️ Envía tu ubicación GPS o escribe tu dirección exacta en Huánuco.', 'error');
+        }
+        destinoFinal = [dirH, refH ? `Ref: ${refH}` : ''].filter(Boolean).join(' | ') || 'Ubicación GPS adjunta';
+      }
 
       enviando = true;
       const b = document.getElementById('btnEnviar');
       b.disabled = true;
-      b.innerText = '⏳ Registrando tu envío...';
+      b.innerText = '⏳ Guardando y abriendo WhatsApp...';
+      ocultarAlerta();
+
+      const esDeliveryHco = (empE === 'Delivery Huánuco');
+      const diaFinal = esDeliveryHco ? 'Coordinar hora y tarifa por interno' : diaS;
+      const emergenciaFinal = esDeliveryHco ? false : esU;
 
       const payload = {
+        accion: 'guardar_envio',
         dni: dni,
         celular: cel,
         nombreCompleto: nom,
         empresa: empE,
-        destino: dest,
-        diaEnvio: diaS,
-        esEmergencia: esU
+        destino: destinoFinal,
+        gpsUrl: esDeliveryHco ? gpsLinkCapturado : '',
+        diaEnvio: diaFinal,
+        esEmergencia: emergenciaFinal
       };
 
-      fetch(URL_BACKEND, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        enviando = false;
-        b.innerText = '✅ ¡Registrado con Éxito!';
-        b.style.background = '#16a34a';
-        mostrarAlerta('🎉 ¡Tus datos se registraron correctamente en Maison de Fiore! Ya puedes cerrar esta ventana.', false);
-      })
-      .catch(err => {
-        enviando = false;
-        b.disabled = false;
-        b.innerText = '✅ Confirmar y Enviar';
-        mostrarAlerta('❌ Error de conexión. Intenta de nuevo.', true);
-      });
+      try {
+        const resp = await fetch(URL_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const resData = await resp.json();
+        if (resData && resData.wspTienda) wspTiendaBackend = String(resData.wspTienda).replace(/\D/g, '');
+        if (resData && resData.vinculado !== undefined) clienteVerificadoEnExcel = Boolean(resData.vinculado);
+      } catch (e) {
+        // Respaldo no-cors en caso de redirección estricta del navegador móvil
+        try {
+          await fetch(URL_BACKEND, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+        } catch (e2) {}
+      }
+
+      const LineasMsg = [
+        `🌸 *SOLICITUD DE ENVÍO - MAISON DE FIORE* 🌸`,
+        clienteVerificadoEnExcel ? `✅ *Estado:* Clienta verificada en sistema` : `⚠️ *Estado:* Datos nuevos (Por vincular en Excel)`,
+        `👤 *Nombre:* ${nom}`,
+        `🪪 *DNI:* ${dni}`,
+        `📱 *Celular:* ${cel}`,
+        `🚚 *Modalidad:* ${empE}`,
+        `📍 *Destino:* ${destinoFinal}`
+      ];
+
+      if (esDeliveryHco && gpsLinkCapturado) {
+        LineasMsg.push(`🗺️ *Ubicación GPS:* ${gpsLinkCapturado}`);
+      }
+      if (esDeliveryHco) {
+        LineasMsg.push(`🛵 *Entrega y Tarifa:* Quedo atenta para coordinar la tarifa de delivery y la hora de entrega.`);
+      } else {
+        LineasMsg.push(`📅 *Día de Despacho:* ${diaS}${emergenciaFinal ? ' (+ S/ 8.00 Recargo Emergencia)' : ' (Despacho Normal)'}`);
+        if (empE === 'Olva Courier') {
+          LineasMsg.push(`📦 *Tarifa Olva:* Quedo atenta a la cotización de envío según mi destino.`);
+        }
+      }
+
+      const textoWsp = encodeURIComponent(LineasMsg.join('\n'));
+      const numDestino = (wspTiendaBackend || WSP_TIENDA_RESPALDO).replace(/\D/g, '');
+      const urlWhatsApp = numDestino
+        ? `https://wa.me/51${numDestino}?text=${textoWsp}`
+        : `https://wa.me/?text=${textoWsp}`;
+
+      document.getElementById('cardPrincipal').classList.add('hidden');
+      document.getElementById('cardFinalizado').classList.remove('hidden');
+      document.getElementById('btnReabrirWsp').href = urlWhatsApp;
+
+      window.location.href = urlWhatsApp;
+      setTimeout(() => {
+        try { window.close(); } catch (e) {}
+      }, 1200);
     }
   </script>
 </body>
