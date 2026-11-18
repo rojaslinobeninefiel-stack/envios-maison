@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>📦 Programa tu Envío - Maison de Fiore</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      margin: 0;
+      padding: 16px 12px;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px 20px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      border-top: 5px solid #0f766e;
+    }
+    .brand-tag {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: #db2777;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    h2 {
+      margin: 0 0 6px 0;
+      color: #0f766e;
+      text-align: center;
+      font-size: 21px;
+      font-weight: 800;
+    }
+    p.sub {
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      margin: 0 0 16px 0;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin: 12px 0 5px;
+      color: #334155;
+    }
+    input, select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #0f172a;
+      background: #f8fafc;
+      outline: none;
+    }
+    input:focus {
+      border-color: #0f766e;
+      background: #ffffff;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .empresas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .emp-btn {
+      padding: 11px 8px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+      text-align: center;
+      color: #475569;
+    }
+    .emp-btn.activo {
+      border-color: #0f766e;
+      background: #f0fdf4;
+      color: #0f766e;
+    }
+    .dias-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .dia-opcion {
+      padding: 11px 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      background: #ffffff;
+    }
+    .dia-opcion.activo {
+      border-color: #1a73e8;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .dia-opcion.urgente.activo {
+      border-color: #dc2626;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    .badge-gratis {
+      background: #dcfce7;
+      color: #166534;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+    .badge-urgente {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: #0f766e;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 18px;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.28);
+    }
+    .btn-submit:hover { background: #0d9488; }
+    #alerta {
+      margin-top: 12px;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand-tag">🌸 Maison de Fiore — La Casa de Flor</div>
+    <h2>📦 Programa tu Envío</h2>
+    <p class="sub">Completa tus datos exactos para el despacho de tu paquete.</p>
+
+    <div class="grid-2">
+      <div>
+        <label>DNI (8 dígitos):</label>
+        <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)">
+      </div>
+      <div>
+        <label>Celular (9 dígitos):</label>
+        <input type="tel" id="celular" placeholder="9 dígitos" oninput="this.value=limpiarCelularWeb(this.value)">
+      </div>
+    </div>
+
+    <label>Nombre y Apellidos Completos:</label>
+    <input type="text" id="nombre" placeholder="Ej: María Flores Pérez">
+
+    <label>1. Modalidad / Agencia:</label>
+    <div class="empresas-grid">
+      <div class="emp-btn activo" onclick="elegirEmpresa('Shalom', this)">🚚 Shalom</div>
+      <div class="emp-btn" onclick="elegirEmpresa('Olva Courier', this)">📦 Olva Courier</div>
+      <div class="emp-btn" onclick="elegirEmpresa('Agencia Texac', this)">🚌 Texac</div>
+      <div class="emp-btn" onclick="elegirEmpresa('Huánuco Domicilio', this)">🛵 Domicilio</div>
+    </div>
+
+    <div id="bloqueShalom" style="margin-top:8px;">
+      <label>Sede / Agencia Shalom:</label>
+      <input list="sL" id="destinoShalom" placeholder="Escribe o elige tu sede...">
+      <datalist id="sL">
+        <option value="Huánuco - Agencia Principal (Jr. Aguilar)">
+        <option value="Huánuco - Jr. Mayro">
+        <option value="Tingo María - Agencia Shalom">
+        <option value="Lima - La Victoria (Bauzate y Meza)">
+        <option value="Lima - Los Olivos (Pro)">
+        <option value="Lima - Independencia (MegaPlaza)">
+        <option value="Lima - San Juan de Lurigancho (Las Flores)">
+      </datalist>
+    </div>
+
+    <div id="bloqueOtro" style="display:none; margin-top:8px;">
+      <label id="lblDestinoOtro">Dirección Exacta y Referencia:</label>
+      <input type="text" id="destinoOtro" placeholder="Ciudad, dirección y referencia...">
+    </div>
+
+    <label>2. Día de Despacho:</label>
+    <div class="dias-box">
+      <div class="dia-opcion activo" onclick="elegirDia('Lunes', false, this)">
+        <span>📅 Lunes (Despacho Normal)</span>
+        <span class="badge-gratis">Gratis</span>
+      </div>
+      <div class="dia-opcion" onclick="elegirDia('Jueves', false, this)">
+        <span>📅 Jueves (Despacho Normal)</span>
+        <span class="badge-gratis">Gratis</span>
+      </div>
+      <div class="dia-opcion urgente" onclick="elegirDia('Emergencia', true, this)">
+        <span>🚨 Emergencia (Otro día)</span>
+        <span class="badge-urgente">+ S/ 8.00</span>
+      </div>
+    </div>
+
+    <button type="button" class="btn-submit" id="btnEnviar" onclick="confirmarEnvio()">✅ Confirmar y Enviar</button>
+    <div id="alerta"></div>
+  </div>
+
+  <script>
+    // ⚠️ AQUÍ DEBES PEGAR TU ENLACE /EXEC ENTRE LAS COMILLAS:
+    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbyF8r6u7QVXjxP58SyBnZ6UI-3IHUVQ1H_xzxIYKgBv4VyWSsEAdZTVBVKB1teMRbaSOg/exec';
+
+    let empE = 'Shalom', diaS = 'Lunes', esU = false, enviando = false;
+
+    function limpiarCelularWeb(val) {
+      let s = String(val || '').trim().replace(/^\+?\s*51[\s\-]*/, '').replace(/\D/g, '');
+      if (s.length === 11 && s.startsWith('519')) s = s.slice(2);
+      return s.slice(0, 9);
+    }
+
+    function elegirEmpresa(e, el) {
+      empE = e;
+      document.querySelectorAll('.emp-btn').forEach(b => b.classList.remove('activo'));
+      el.classList.add('activo');
+      document.getElementById('bloqueShalom').style.display = e === 'Shalom' ? 'block' : 'none';
+      document.getElementById('bloqueOtro').style.display = e === 'Shalom' ? 'none' : 'block';
+    }
+
+    function elegirDia(d, u, el) {
+      esU = u;
+      diaS = d;
+      document.querySelectorAll('.dia-opcion').forEach(x => x.classList.remove('activo'));
+      el.classList.add('activo');
+    }
+
+    function mostrarAlerta(t, err) {
+      const a = document.getElementById('alerta');
+      a.innerText = t;
+      a.style.display = 'block';
+      a.style.background = err ? '#fee2e2' : '#dcfce7';
+      a.style.color = err ? '#991b1b' : '#14532d';
+    }
+
+    function confirmarEnvio() {
+      if (enviando) return;
+      const dni = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
+      const cel = limpiarCelularWeb(document.getElementById('celular').value);
+      const nom = document.getElementById('nombre').value.trim();
+      const dest = empE === 'Shalom'
+        ? document.getElementById('destinoShalom').value.trim()
+        : document.getElementById('destinoOtro').value.trim();
+
+      if (!/^\d{8}$/.test(dni)) return mostrarAlerta('⚠️ El DNI debe tener exactamente 8 números.', true);
+      if (!/^9\d{8}$/.test(cel)) return mostrarAlerta('⚠️ El celular debe tener 9 números y empezar con 9.', true);
+      if (!nom || nom.length < 3) return mostrarAlerta('⚠️ Ingresa tu nombre y apellidos completos.', true);
+      if (!dest) return mostrarAlerta('⚠️ Indica la sede o dirección exacta de destino.', true);
+
+      enviando = true;
+      const b = document.getElementById('btnEnviar');
+      b.disabled = true;
+      b.innerText = '⏳ Registrando tu envío...';
+
+      const payload = {
+        dni: dni,
+        celular: cel,
+        nombreCompleto: nom,
+        empresa: empE,
+        destino: dest,
+        diaEnvio: diaS,
+        esEmergencia: esU
+      };
+
+      fetch(URL_BACKEND, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        enviando = false;
+        b.innerText = '✅ ¡Registrado con Éxito!';
+        b.style.background = '#16a34a';
+        mostrarAlerta('🎉 ¡Tus datos se registraron correctamente en Maison de Fiore! Ya puedes cerrar esta ventana.', false);
+      })
+      .catch(err => {
+        enviando = false;
+        b.disabled = false;
+        b.innerText = '✅ Confirmar y Enviar';
+        mostrarAlerta('❌ Error de conexión. Intenta de nuevo.', true);
+      });
+    }
+  </script>
+</body>
+</html>
