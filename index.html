@@ -378,7 +378,7 @@
     <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
     <h2 style="color:#16a34a;">¡Envío Registrado con Éxito!</h2>
     <p style="color:#334155; font-size:14px; line-height:1.5; margin: 12px 0 20px;">
-      Tus datos ya quedaron guardados en el sistema de <b>Maison de Fiore</b> y te estamos redirigiendo a nuestro WhatsApp para confirmar tu despacho.
+      Tus datos ya quedaron guardados en el sistema de <b>Maison de Fiore</b> y se abrió WhatsApp con tu ficha de envío.
     </p>
     <a id="btnReabrirWsp" href="#" target="_blank" class="btn-primary" style="display:block; text-decoration:none; background:#16a34a;">
       📲 Abrir WhatsApp Ahora
@@ -387,10 +387,8 @@
   </div>
 
   <script>
-    // URL OFICIAL /EXEC DE TU GOOGLE APPS SCRIPT:
-    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbyF8r6u7QVXjxP58SyBnZ6UI-3IHUVQ1H_xzxIYKgBv4VyWSsEAdZTVBVKB1teMRbaSOg/exec';
-    // Si deseas dejar un número de WhatsApp fijo de respaldo (9 dígitos), colócalo aquí; si está vacío usa el configurado en tu Excel:
-    const WSP_TIENDA_RESPALDO = '';
+    // ✅ TU NUEVO ENLACE /EXEC ACTUALIZADO:
+    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbxsypLB6iSUgNoFXl1qAZcvR8e09Kt8x7GDqCKeu3ceDzV1vmfzQaNAZ_wLq-92BFkb4g/exec';
 
     let intentosVerificacion = 0;
     let claveUltimoIntento = '';
@@ -460,6 +458,7 @@
       try {
         const resp = await fetch(URL_BACKEND, {
           method: 'POST',
+          redirect: 'follow',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
             accion: 'verificar',
@@ -469,11 +468,14 @@
           })
         });
 
-        const data = await resp.json();
+        const textoResp = await resp.text();
+        const data = JSON.parse(textoResp);
         btn.disabled = false;
         btn.innerText = '🔍 Confirmar mis Datos';
 
-        if (data && data.wspTienda) wspTiendaBackend = String(data.wspTienda).replace(/\D/g, '');
+        if (data && data.wspTienda) {
+          wspTiendaBackend = limpiarCelularWeb(data.wspTienda);
+        }
 
         if (data && data.encontrado) {
           clienteVerificadoEnExcel = true;
@@ -482,7 +484,7 @@
         } else {
           intentosVerificacion++;
           if (intentosVerificacion === 1) {
-            mostrarAlerta('⚠️ No encontramos tu registro con estos datos. Por favor, revisa que tu DNI, celular o nombre estén bien escritos y presiona "Confirmar mis Datos" nuevamente.', 'warn');
+            mostrarAlerta('⚠️ No encontramos tu registro con estos datos. Por favor, revisa que tu DNI, celular o nombre estén bien escritos y presiona el botón nuevamente.', 'warn');
             btn.innerText = '✔️ Mis datos están correctos (Continuar)';
           } else {
             clienteVerificadoEnExcel = false;
@@ -599,7 +601,7 @@
       enviando = true;
       const b = document.getElementById('btnEnviar');
       b.disabled = true;
-      b.innerText = '⏳ Guardando y abriendo WhatsApp...';
+      b.innerText = '⏳ Guardando en Excel y abriendo WhatsApp...';
       ocultarAlerta();
 
       const esDeliveryHco = (empE === 'Delivery Huánuco');
@@ -621,14 +623,19 @@
       try {
         const resp = await fetch(URL_BACKEND, {
           method: 'POST',
+          redirect: 'follow',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        const resData = await resp.json();
-        if (resData && resData.wspTienda) wspTiendaBackend = String(resData.wspTienda).replace(/\D/g, '');
-        if (resData && resData.vinculado !== undefined) clienteVerificadoEnExcel = Boolean(resData.vinculado);
+        const texto = await resp.text();
+        const resData = JSON.parse(texto);
+        if (resData && resData.wspTienda) {
+          wspTiendaBackend = limpiarCelularWeb(resData.wspTienda);
+        }
+        if (resData && resData.vinculado !== undefined) {
+          clienteVerificadoEnExcel = Boolean(resData.vinculado);
+        }
       } catch (e) {
-        // Respaldo no-cors en caso de redirección estricta del navegador móvil
         try {
           await fetch(URL_BACKEND, {
             method: 'POST',
@@ -662,10 +669,9 @@
       }
 
       const textoWsp = encodeURIComponent(LineasMsg.join('\n'));
-      const numDestino = (wspTiendaBackend || WSP_TIENDA_RESPALDO).replace(/\D/g, '');
-      const urlWhatsApp = numDestino
-        ? `https://wa.me/51${numDestino}?text=${textoWsp}`
-        : `https://wa.me/?text=${textoWsp}`;
+      // Si configuraste el WhatsApp de la tienda en tu Excel, va directo ahí; si está vacío, abre directo el chat con el celular ingresado en el formulario (nunca pide elegir contacto):
+      const numDestino = /^9\d{8}$/.test(wspTiendaBackend) ? wspTiendaBackend : cel;
+      const urlWhatsApp = `https://wa.me/51${numDestino}?text=${textoWsp}`;
 
       document.getElementById('cardPrincipal').classList.add('hidden');
       document.getElementById('cardFinalizado').classList.remove('hidden');
