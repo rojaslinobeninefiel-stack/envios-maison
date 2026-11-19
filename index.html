@@ -425,11 +425,15 @@
       ocultarAlerta();
 
       try {
-        const resp = await fetch(URL_BACKEND, {
-          method: 'POST',
-          redirect: 'follow',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ accion: 'verificar', dni: dni, celular: cel, nombreCompleto: nom })
+        const qs = new URLSearchParams({
+          accion: 'verificar',
+          dni: dni,
+          celular: cel,
+          nombreCompleto: nom
+        }).toString();
+        const resp = await fetch(`${URL_BACKEND}?${qs}`, {
+          method: 'GET',
+          redirect: 'follow'
         });
         const data = JSON.parse(await resp.text());
         btn.disabled = false;
