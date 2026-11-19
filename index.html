@@ -159,7 +159,7 @@
     </div>
 
     <div class="banner-corte">
-      ⏰ <b>Hora de corte (11:30 AM):</b> Tienes tiempo para registrar tu envío de agencia hasta las <b>11:30 AM</b> del día de despacho (Martes o Jueves). Si registras después de esa hora, tu paquete pasará automáticamente a la siguiente salida.
+      ⏰ <b>Hora de corte (11:30 AM):</b> Tienes tiempo para registrar tu envío de agencia hasta las <b>11:30 AM</b> del día de despacho (Lunes o Jueves). Si registras después de esa hora, tu paquete pasará automáticamente a la siguiente salida.
     </div>
 
     <div class="steps-bar">
@@ -658,18 +658,18 @@
       let opciones = [];
       let saltoMensaje = '';
       let iter = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
-      let contMartes = 0, contJueves = 0;
+      let contLunes = 0, contJueves = 0;
 
-      for (let i = 0; i < 30 && (contMartes < 3 || contJueves < 3); i++) {
+      for (let i = 0; i < 30 && (contLunes < 3 || contJueves < 3); i++) {
         const ds = iter.getDay();
         const esHoy = (i === 0);
-        if (ds === 2 && contMartes < 3) {
+        if (ds === 1 && contLunes < 3) {
           if (esHoy && pasoCorteHoy) {
-            saltoMensaje = '⏰ Pasó la hora de corte (11:30 AM) para la salida de este Martes. Tu pedido se programará automáticamente para la siguiente salida disponible.';
+            saltoMensaje = '⏰ Pasó la hora de corte (11:30 AM) para la salida de este Lunes. Tu pedido se programará automáticamente para la siguiente salida disponible.';
           } else {
             const fStr = formatearFechaCorta(iter);
-            opciones.push({ label: `📅 Martes ${fStr} (Despacho Normal - Gratis)`, val: `Martes ${fStr}` });
-            contMartes++;
+            opciones.push({ label: `📅 Lunes ${fStr} (Despacho Normal - Gratis)`, val: `Lunes ${fStr}` });
+            contLunes++;
           }
         } else if (ds === 4 && contJueves < 3) {
           if (esHoy && pasoCorteHoy) {
