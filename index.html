@@ -316,15 +316,15 @@
       <div id="wrap-celular">
         <label>Celular (9 dígitos): <span id="tag-falta-cel" class="campo-faltante-tag hidden">Completar</span></label>
         <div class="input-search-row">
-          <input type="tel" id="celular" placeholder="Ej: 987654321" oninput="ocultarAlerta(); this.value=limpiarCelularWeb(this.value)" onkeydown="manejarEnterCampoBusqueda(event, 'celular')">
+          <input type="tel" id="celular" placeholder="numero" oninput="ocultarAlerta(); this.value=limpiarCelularWeb(this.value)" onkeydown="manejarEnterCampoBusqueda(event, 'celular')">
           <button type="button" id="btnBuscarCel" class="btn-buscar-inline" onclick="buscarClientaPorDato('celular')">🔍 Buscar</button>
         </div>
       </div>
 
       <div id="wrap-dni">
-        <label>DNI (8 dígitos): <span id="tag-falta-dni" class="campo-faltante-tag hidden">Completar</span></label>
+        <label>DNI (Dni): <span id="tag-falta-dni" class="campo-faltante-tag hidden">Completar</span></label>
         <div class="input-search-row">
-          <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="ocultarAlerta(); this.value=this.value.replace(/\D/g,'').slice(0,8)" onkeydown="manejarEnterCampoBusqueda(event, 'dni')">
+          <input type="tel" id="dni" maxlength="8" placeholder="Dni" oninput="ocultarAlerta(); this.value=this.value.replace(/\D/g,'').slice(0,8)" onkeydown="manejarEnterCampoBusqueda(event, 'dni')">
           <button type="button" id="btnBuscarDni" class="btn-buscar-inline" onclick="buscarClientaPorDato('dni')">🔍 Buscar</button>
         </div>
       </div>
@@ -616,7 +616,7 @@
         return mostrarAlerta('⚠️ Ingresa tu número de celular de 9 dígitos (que empiece con 9) para buscarte.', 'error');
       }
       if (campo === 'dni' && !/^\d{8}$/.test(dniInp)) {
-        return mostrarAlerta('⚠️ Ingresa tu DNI de 8 dígitos para buscarte.', 'error');
+        return mostrarAlerta('⚠️ Ingresa tu DNI de Dni para buscarte.', 'error');
       }
 
       const btnCel = document.getElementById('btnBuscarCel');
