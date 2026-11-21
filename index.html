@@ -42,7 +42,129 @@
     .banner-corte {
       background: #fff7ed; border: 1.5px solid #fdba74; color: #9a3412;
       padding: 10px 12px; border-radius: 12px; font-size: 12px;
-      line-height: 1.45; margin-bottom: 14px;
+      line-height: 1.45; margin-bottom: 12px;
+    }
+    .banner-cliente-guia {
+      background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+      border: 1.5px solid #93c5fd;
+      border-radius: 14px;
+      padding: 12px 13px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      line-height: 1.48;
+      color: #1e3a8a;
+    }
+    .banner-cliente-guia-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1d4ed8;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .banner-cliente-tip {
+      margin-top: 7px;
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, 0.85);
+      border-left: 3px solid #2563eb;
+      border-radius: 6px;
+      color: #0f172a;
+      font-size: 11.5px;
+    }
+    .input-search-row {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .input-search-row input { flex: 1; min-width: 0; }
+    .btn-buscar-inline {
+      flex-shrink: 0;
+      padding: 0 14px;
+      background: #1d4ed8;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.22);
+    }
+    .btn-buscar-inline:hover { background: #1e40af; }
+    .btn-buscar-inline:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+    .verified-card {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 14px;
+      padding: 13px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      color: #14532d;
+    }
+    .verified-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #86efac;
+    }
+    .verified-title { font-weight: 800; font-size: 13px; color: #15803d; }
+    .verified-rows { display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+    .verified-row { display: flex; justify-content: space-between; gap: 8px; }
+    .verified-row span { color: #475569; font-weight: 600; flex-shrink: 0; }
+    .verified-row b { color: #0f172a; text-align: right; word-break: break-word; }
+    .verified-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #86efac;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-mini-edit {
+      background: #ffffff;
+      color: #1d4ed8;
+      border: 1.5px solid #93c5fd;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-mini-edit:hover { background: #eff6ff; }
+    .btn-mini-reset {
+      background: transparent;
+      color: #64748b;
+      border: none;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .campo-faltante-tag {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .saved-addr-card {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 14px;
+      padding: 13px;
+      margin-top: 6px;
+      font-size: 12.5px;
+      color: #14532d;
+      line-height: 1.5;
     }
     .banner-salto {
       background: #eff6ff; border: 1.5px solid #93c5fd; color: #1e40af;
@@ -74,7 +196,6 @@
     }
     input:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
     select:disabled, input:disabled { background: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .user-bar {
       background: #f0fdf4; border: 1.5px solid #86efac; color: #166534;
       padding: 9px 12px; border-radius: 10px; font-size: 12px; font-weight: 700;
@@ -169,22 +290,52 @@
 
     <!-- PASO 1 -->
     <div id="seccionPaso1">
-      <div class="grid-2">
+      <div id="bannerGuiaPaso1" class="banner-cliente-guia">
+        <div class="banner-cliente-guia-title">✨ ¿Ya eres clienta o te registraste antes?</div>
         <div>
-          <label>DNI (8 dígitos):</label>
-          <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="ocultarAlerta(); this.value=this.value.replace(/\D/g,'').slice(0,8)">
+          Solo ingresa <b>un dato (tu Celular o DNI)</b> y presiona <b>🔍 Buscar</b>. Cargaremos tus datos automáticamente y solo completarás lo que falte.
         </div>
-        <div>
-          <label>Celular (9 dígitos):</label>
-          <input type="tel" id="celular" placeholder="9 dígitos" oninput="ocultarAlerta(); this.value=limpiarCelularWeb(this.value)">
+        <div class="banner-cliente-tip">
+          📱 <b>Importante:</b> Asegúrate de ingresar el <b>número de celular con el que nos escribiste, nos pasaste en el Live o actualizaste</b> para ubicarte al instante.
         </div>
       </div>
 
-      <label>Nombre y Apellidos Completos (o Usuario de TikTok):</label>
-      <input type="text" id="nombre" placeholder="Ej: María Flores Pérez" oninput="ocultarAlerta()">
+      <!-- TARJETA DE CLIENTA VERIFICADA -->
+      <div id="cardClienteVerificado" class="verified-card hidden">
+        <div class="verified-header">
+          <div id="verifTitulo" class="verified-title">✅ Clienta encontrada</div>
+          <span id="verifBadgePrendas" class="hidden" style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:800;"></span>
+        </div>
+        <div id="verifListaDatos" class="verified-rows"></div>
+        <div class="verified-actions">
+          <button type="button" id="btnToggleEditPaso1" class="btn-mini-edit" onclick="toggleEditarDatosPaso1()">✏️ Modificar mis datos</button>
+          <button type="button" class="btn-mini-reset" onclick="reiniciarBusquedaPaso1()">🔄 Buscar otra clienta</button>
+        </div>
+      </div>
+
+      <div id="wrap-celular">
+        <label>Celular (9 dígitos): <span id="tag-falta-cel" class="campo-faltante-tag hidden">Completar</span></label>
+        <div class="input-search-row">
+          <input type="tel" id="celular" placeholder="Ej: 987654321" oninput="ocultarAlerta(); this.value=limpiarCelularWeb(this.value)" onkeydown="manejarEnterCampoBusqueda(event, 'celular')">
+          <button type="button" id="btnBuscarCel" class="btn-buscar-inline" onclick="buscarClientaPorDato('celular')">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div id="wrap-dni">
+        <label>DNI (8 dígitos): <span id="tag-falta-dni" class="campo-faltante-tag hidden">Completar</span></label>
+        <div class="input-search-row">
+          <input type="tel" id="dni" maxlength="8" placeholder="8 dígitos" oninput="ocultarAlerta(); this.value=this.value.replace(/\D/g,'').slice(0,8)" onkeydown="manejarEnterCampoBusqueda(event, 'dni')">
+          <button type="button" id="btnBuscarDni" class="btn-buscar-inline" onclick="buscarClientaPorDato('dni')">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div id="wrap-nombre">
+        <label>Nombre y Apellidos Completos (o Usuario de TikTok): <span id="tag-falta-nom" class="campo-faltante-tag hidden">Completar</span></label>
+        <input type="text" id="nombre" placeholder="Ej: María Flores Pérez" oninput="ocultarAlerta()" onkeydown="if(event.key==='Enter'){event.preventDefault();verificarDatosPaso1();}">
+      </div>
 
       <button type="button" class="btn-primary" id="btnVerificar" onclick="verificarDatosPaso1()">
-        🔍 Confirmar mis Datos
+        🔍 Confirmar y Continuar
       </button>
     </div>
 
@@ -192,86 +343,108 @@
     <div id="seccionPaso2" class="hidden">
       <div class="user-bar">
         <span id="txtResumenCliente">👤 Clienta verificada</span>
-        <button type="button" onclick="volverAPaso1()" style="background:transparent;border:none;color:#15803d;font-weight:800;cursor:pointer;text-decoration:underline;font-size:11px;">Editar</button>
+        <button type="button" onclick="volverAPaso1()" style="background:transparent;border:none;color:#15803d;font-weight:800;cursor:pointer;text-decoration:underline;font-size:11px;">Editar datos</button>
       </div>
 
-      <label>¿Cómo quieres recibir tu pedido?</label>
-      <select id="selModalidad" onchange="cambiarModalidadUI(this.value)">
-        <option value="Shalom">🚚 Retiro en Agencia Shalom (Nacional)</option>
-        <option value="Olva Courier">📦 Envío por Olva Courier</option>
-        <option value="Delivery Huánuco">🛵 Delivery en Huánuco (Coordinación libre)</option>
-      </select>
+      <!-- DIRECCIÓN GUARDADA EN EXCEL -->
+      <div id="bloqueDireccionGuardada" class="saved-addr-card hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+          <b style="color:#15803d;font-size:13px;">📍 Tu destino guardado</b>
+          <button type="button" class="btn-mini-edit" onclick="activarEdicionDireccionPaso2(true)">✏️ Modificar dirección</button>
+        </div>
+        <div id="txtDirGuardadaDetalle" style="font-size:12.5px;color:#0f172a;"></div>
+        <div style="font-size:11px;color:#166534;margin-top:6px;">
+          ✅ Si sigue siendo tu misma agencia o dirección, solo elige tu <b>fecha de envío</b> abajo.
+        </div>
+      </div>
 
-      <!-- SHALOM -->
-      <div id="bloqueShalom" class="shalom-box">
-        <label style="margin-top:0; color:#1d4ed8;">🔎 Búsqueda rápida por ciudad, distrito o sede:</label>
-        <input type="text" id="inpBusqRapidaShalom" placeholder="Ej: Huánuco, Jr Mayro, Los Olivos, Arequipa..." oninput="filtrarBusquedaRapidaShalom(this.value)">
-        <div id="boxResultadosRapidos" class="search-results hidden"></div>
-
-        <div style="text-align:center; font-size:11px; color:#64748b; font-weight:700; margin:10px 0 4px;">
-          — O selecciona paso a paso —
+      <!-- SELECTOR DE NUEVA DIRECCIÓN / AGENCIA -->
+      <div id="bloqueEditarDestino">
+        <div id="wrapVolverDirGuardada" class="hidden" style="margin-bottom:8px;text-align:right;">
+          <button type="button" class="btn-mini-edit" onclick="activarEdicionDireccionPaso2(false)">↩️ Usar mi dirección guardada</button>
         </div>
 
-        <label style="margin-top:4px;">1. Departamento:</label>
-        <select id="shlDep" onchange="alCambiarDepartamento()">
-          <option value="">Selecciona departamento...</option>
+        <label>¿Cómo quieres recibir tu pedido?</label>
+        <select id="selModalidad" onchange="cambiarModalidadUI(this.value)">
+          <option value="Shalom">🚚 Retiro en Agencia Shalom (Nacional)</option>
+          <option value="Olva Courier">📦 Envío por Olva Courier</option>
+          <option value="Delivery Huánuco">🛵 Delivery en Huánuco (Coordinación libre)</option>
         </select>
 
-        <label>2. Provincia:</label>
-        <select id="shlProv" disabled onchange="alCambiarProvincia()">
-          <option value="">Selecciona provincia...</option>
-        </select>
+        <!-- SHALOM -->
+        <div id="bloqueShalom" class="shalom-box">
+          <label style="margin-top:0; color:#1d4ed8;">🔎 Búsqueda rápida por ciudad, distrito o sede:</label>
+          <input type="text" id="inpBusqRapidaShalom" placeholder="Ej: Huánuco, Jr Mayro, Los Olivos, Arequipa..." oninput="filtrarBusquedaRapidaShalom(this.value)">
+          <div id="boxResultadosRapidos" class="search-results hidden"></div>
 
-        <label>3. Agencia Shalom:</label>
-        <select id="shlAgencia" disabled onchange="alCambiarAgencia()">
-          <option value="">Selecciona agencia...</option>
-        </select>
+          <div style="text-align:center; font-size:11px; color:#64748b; font-weight:700; margin:10px 0 4px;">
+            — O selecciona paso a paso —
+          </div>
 
-        <div id="bloqueServicioShalom" class="hidden" style="margin-top:8px;">
-          <label style="margin-top:4px;">4. Tipo de Envío Shalom:</label>
-          <select id="shlTipoServicio" onchange="actualizarTarjetaAgenciaShalom()">
-            <option value="Terrestre">🚚 Terrestre (Normal)</option>
-            <option value="Aéreo">✈️ Aéreo</option>
+          <label style="margin-top:4px;">1. Departamento:</label>
+          <select id="shlDep" onchange="alCambiarDepartamento()">
+            <option value="">Selecciona departamento...</option>
           </select>
-          <div id="avisoAereoPorConfirmar" class="aviso-aereo hidden">
-            ⚠️ <b>Aviso sobre Envío Aéreo:</b> La modalidad aérea para esta agencia está sujeta a confirmación con Shalom. Si no estuviera disponible para este destino, tu paquete será despachado automáticamente por <b>vía Terrestre</b> sin retrasar tu envío.
+
+          <label>2. Provincia:</label>
+          <select id="shlProv" disabled onchange="alCambiarProvincia()">
+            <option value="">Selecciona provincia...</option>
+          </select>
+
+          <label>3. Agencia Shalom:</label>
+          <select id="shlAgencia" disabled onchange="alCambiarAgencia()">
+            <option value="">Selecciona agencia...</option>
+          </select>
+
+          <div id="bloqueServicioShalom" class="hidden" style="margin-top:8px;">
+            <label style="margin-top:4px;">4. Tipo de Envío Shalom:</label>
+            <select id="shlTipoServicio" onchange="actualizarTarjetaAgenciaShalom()">
+              <option value="Terrestre">🚚 Terrestre (Normal)</option>
+              <option value="Aéreo">✈️ Aéreo</option>
+            </select>
+            <div id="avisoAereoPorConfirmar" class="aviso-aereo hidden">
+              ⚠️ <b>Aviso sobre Envío Aéreo:</b> La modalidad aérea para esta agencia está sujeta a confirmación con Shalom. Si no estuviera disponible para este destino, tu paquete será despachado automáticamente por <b>vía Terrestre</b> sin retrasar tu envío.
+            </div>
+          </div>
+
+          <div id="shlTarjetaSeleccion" class="selected-agency-card hidden"></div>
+        </div>
+
+        <!-- OLVA COURIER -->
+        <div id="bloqueOlva" class="hidden" style="margin-top:8px;">
+          <label>Departamento, Provincia y Distrito:</label>
+          <input type="text" id="olvaUbigeo" placeholder="Ej: Lima - Lima - Miraflores">
+          <label>Dirección Exacta (o Sede Olva si recoges en oficina):</label>
+          <input type="text" id="olvaDireccion" placeholder="Av. / Calle / Número / Referencia...">
+          <div class="info-box">
+            📦 <b>Nota Olva Courier:</b> La tarifa de envío de Olva se cotiza según peso y destino, y te la confirmaremos por WhatsApp.
           </div>
         </div>
 
-        <div id="shlTarjetaSeleccion" class="selected-agency-card hidden"></div>
-      </div>
+        <!-- DELIVERY HUÁNUCO -->
+        <div id="bloqueHuanuco" class="hidden" style="margin-top:8px;">
+          <label>Ubicación en Tiempo Real (Opcional pero recomendado):</label>
+          <button type="button" id="btnGps" class="btn-gps" onclick="capturarUbicacionGPS()">
+            📍 Enviar mi Ubicación Actual (Google Maps)
+          </button>
+          <iframe id="mapaPreview" class="map-frame" loading="lazy"></iframe>
 
-      <!-- OLVA COURIER -->
-      <div id="bloqueOlva" class="hidden" style="margin-top:8px;">
-        <label>Departamento, Provincia y Distrito:</label>
-        <input type="text" id="olvaUbigeo" placeholder="Ej: Lima - Lima - Miraflores">
-        <label>Dirección Exacta (o Sede Olva si recoges en oficina):</label>
-        <input type="text" id="olvaDireccion" placeholder="Av. / Calle / Número / Referencia...">
-        <div class="info-box">
-          📦 <b>Nota Olva Courier:</b> La tarifa de envío de Olva se cotiza según peso y destino, y te la confirmaremos por WhatsApp.
+          <label>Dirección Exacta en Huánuco (Jr. / Calle / Número):</label>
+          <input type="text" id="huanucoDireccion" placeholder="Ej: Jr. Dos de Mayo 1240 - Huánuco">
+
+          <label>Referencia (Color de casa, portón, frente a qué está):</label>
+          <input type="text" id="huanucoReferencia" placeholder="Ej: Casa de 2 pisos portón negro...">
+
+          <div class="info-box">
+            🛵 <b>Delivery Huánuco:</b> Puedes elegir cualquier día. Coordinaremos contigo por WhatsApp la <b>tarifa según tu zona y la hora exacta</b> de entrega.
+          </div>
         </div>
       </div>
 
-      <!-- DELIVERY HUÁNUCO -->
-      <div id="bloqueHuanuco" class="hidden" style="margin-top:8px;">
-        <label>Ubicación en Tiempo Real (Opcional pero recomendado):</label>
-        <button type="button" id="btnGps" class="btn-gps" onclick="capturarUbicacionGPS()">
-          📍 Enviar mi Ubicación Actual (Google Maps)
-        </button>
-        <iframe id="mapaPreview" class="map-frame" loading="lazy"></iframe>
-
-        <label>Dirección Exacta en Huánuco (Jr. / Calle / Número):</label>
-        <input type="text" id="huanucoDireccion" placeholder="Ej: Jr. Dos de Mayo 1240 - Huánuco">
-
-        <label>Referencia (Color de casa, portón, frente a qué está):</label>
-        <input type="text" id="huanucoReferencia" placeholder="Ej: Casa de 2 pisos portón negro...">
-
+      <!-- FECHA DE ENVÍO DELIVERY HUÁNUCO -->
+      <div id="bloqueFechaHuanuco" class="hidden" style="margin-top:12px;">
         <label>Fecha deseada de entrega en Huánuco (Libre):</label>
         <select id="selFechaHuanuco"></select>
-
-        <div class="info-box">
-          🛵 <b>Delivery Huánuco:</b> Puedes elegir cualquier día. Coordinaremos contigo por WhatsApp la <b>tarifa según tu zona y la hora exacta</b> de entrega.
-        </div>
       </div>
 
       <!-- FECHA DE ENVÍO AGENCIA -->
@@ -317,7 +490,7 @@
       }
     });
 
-    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbz0ivNslt9qvRN4clu9olKssO8RBo9nmVHbaHBGKzOFfYOCshi7LxfwZruL_P3JNVAvVA/exec';
+    const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbxATka7tSVCtlJaPcKKdIpbJPme8FR4pPpG1ALHJMLf6sN7TBZu4bThWVu6WsWKnBC_/exec';
     const CACHE_KEY_SHALOM = 'mdf_catalogo_shalom_v2';
 
     // Espejo local para carga instantánea incluso en celulares de gama baja
@@ -329,12 +502,25 @@
     let claveUltimoIntento = '';
     let clienteVerificadoEnExcel = false;
     let nombreOficialDetectado = '';
+    let datosVerificados = null;
+    let modoEdicionPaso1 = false;
+    let usarDireccionGuardada = false;
+    let paso2Inicializado = false;
     let wspTiendaBackend = '';
 
     let modalidadActual = 'Shalom';
     let agenciaSeleccionadaObj = null;
     let gpsLinkCapturado = '';
     let enviando = false;
+
+    function escHTML(str) {
+      return String(str === undefined || str === null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function limpiarPrefijoEmpresaLocal(str) {
+      return String(str || '').trim().replace(/^(Shalom|Olva\s*Courier|Olva|Delivery\s*Hu[aá]nuco|Delivery|Domicilio)\s*:\s*/i, '').trim();
+    }
 
     function mapearListaCruda(arr) {
       return (arr || []).map(r => ({
@@ -369,14 +555,11 @@
         if (data && data.exito && Array.isArray(data.agencias) && data.agencias.length > 0) {
           CATALOGO_SHALOM = mapearListaCruda(data.agencias);
           try { localStorage.setItem(CACHE_KEY_SHALOM, JSON.stringify(data.agencias)); } catch (e) {}
-          // Si todavía no ha elegido departamento, refrescamos el selector sin interrumpir
           if (!document.getElementById('shlDep').value) {
             inicializarDepartamentosShalom();
           }
         }
-      } catch (e) {
-        // Si falla la red, sigue usando el espejo local sin ningún problema
-      }
+      } catch (e) {}
     }
 
     window.onload = function() {
@@ -404,14 +587,251 @@
 
     function ocultarAlerta() { document.getElementById('alerta').style.display = 'none'; }
 
+    function detectarModalidadDesdeEmpresa(empStr) {
+      const low = String(empStr || '').toLowerCase();
+      if (low.indexOf('huánuco') !== -1 || low.indexOf('huanuco') !== -1 || low.indexOf('domicilio') !== -1 || low.indexOf('delivery') !== -1) {
+        return 'Delivery Huánuco';
+      }
+      if (low.indexOf('olva') !== -1) return 'Olva Courier';
+      return 'Shalom';
+    }
+
+    function manejarEnterCampoBusqueda(e, campo) {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (clienteVerificadoEnExcel) {
+        verificarDatosPaso1();
+      } else {
+        buscarClientaPorDato(campo);
+      }
+    }
+
+    // BÚSQUEDA RÁPIDA CON UN SOLO DATO (CELULAR O DNI)
+    async function buscarClientaPorDato(campo) {
+      if (clienteVerificadoEnExcel) return;
+      const celInp = limpiarCelularWeb(document.getElementById('celular').value);
+      const dniInp = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
+
+      if (campo === 'celular' && !/^9\d{8}$/.test(celInp)) {
+        return mostrarAlerta('⚠️ Ingresa tu número de celular de 9 dígitos (que empiece con 9) para buscarte.', 'error');
+      }
+      if (campo === 'dni' && !/^\d{8}$/.test(dniInp)) {
+        return mostrarAlerta('⚠️ Ingresa tu DNI de 8 dígitos para buscarte.', 'error');
+      }
+
+      const btnCel = document.getElementById('btnBuscarCel');
+      const btnDni = document.getElementById('btnBuscarDni');
+      const btnMain = document.getElementById('btnVerificar');
+      btnCel.disabled = true;
+      btnDni.disabled = true;
+      btnMain.disabled = true;
+      if (campo === 'celular') btnCel.innerText = '⏳...';
+      else btnDni.innerText = '⏳...';
+      ocultarAlerta();
+
+      try {
+        const qs = new URLSearchParams({
+          accion: 'verificar',
+          dni: campo === 'dni' ? dniInp : '',
+          celular: campo === 'celular' ? celInp : '',
+          nombreCompleto: ''
+        }).toString();
+
+        const resp = await fetch(`${URL_BACKEND}?${qs}`, { method: 'GET', redirect: 'follow' });
+        const data = JSON.parse(await resp.text());
+
+        btnCel.disabled = false;
+        btnDni.disabled = false;
+        btnMain.disabled = false;
+        btnCel.innerText = '🔍 Buscar';
+        btnDni.innerText = '🔍 Buscar';
+
+        if (data && data.wspTienda) wspTiendaBackend = limpiarCelularWeb(data.wspTienda);
+
+        if (data && data.encontrado) {
+          aplicarDatosClienteEncontrado(data, celInp, dniInp, false);
+        } else {
+          clienteVerificadoEnExcel = false;
+          datosVerificados = null;
+          mostrarAlerta(
+            '⚠️ No encontramos tu registro con ese dato. Asegúrate de usar el número con el que nos escribiste, pasaste en el Live o actualizaste; o completa los campos abajo para continuar.',
+            'warn'
+          );
+        }
+      } catch (err) {
+        btnCel.disabled = false;
+        btnDni.disabled = false;
+        btnMain.disabled = false;
+        btnCel.innerText = '🔍 Buscar';
+        btnDni.innerText = '🔍 Buscar';
+        mostrarAlerta('⚠️ No se pudo conectar en este momento. Completa tus datos y presiona Continuar.', 'warn');
+      }
+    }
+
+    function aplicarDatosClienteEncontrado(data, celIngresado, dniIngresado, preservarManuales) {
+      clienteVerificadoEnExcel = true;
+      nombreOficialDetectado = String(data.clienteOficial || '').trim();
+      modoEdicionPaso1 = false;
+      paso2Inicializado = false;
+
+      const dniManual = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
+      const celManual = limpiarCelularWeb(document.getElementById('celular').value);
+      const nomManual = document.getElementById('nombre').value.trim();
+
+      let nomBackend = String(data.nombreRecojo || '').trim();
+      if (/^cel:\s*9\d{8}$/i.test(nomBackend)) nomBackend = '';
+
+      const dniFinal = preservarManuales && /^\d{8}$/.test(dniManual)
+        ? dniManual
+        : String(data.dni || dniIngresado || dniManual || '').replace(/\D/g, '').slice(0, 8);
+
+      const celFinal = preservarManuales && /^9\d{8}$/.test(celManual)
+        ? celManual
+        : limpiarCelularWeb(data.celular || celIngresado || celManual || '');
+
+      const nomFinal = preservarManuales && nomManual.length >= 3
+        ? nomManual
+        : (nomBackend || nomManual);
+
+      document.getElementById('dni').value = dniFinal;
+      document.getElementById('celular').value = celFinal;
+      document.getElementById('nombre').value = nomFinal;
+
+      const dirRaw = String(data.direccion || '').trim();
+      const dirDestino = limpiarPrefijoEmpresaLocal(data.destino || dirRaw);
+      const empGuardada = String(data.empresa || '').trim();
+
+      datosVerificados = {
+        clienteOficial: nombreOficialDetectado,
+        nombreRecojo: nomFinal,
+        dni: dniFinal,
+        celular: celFinal,
+        direccion: dirRaw,
+        empresa: empGuardada ? detectarModalidadDesdeEmpresa(empGuardada) : (dirRaw ? detectarModalidadDesdeEmpresa(dirRaw) : ''),
+        destino: dirDestino,
+        gpsUrl: String(data.gpsUrl || '').trim(),
+        prendas: Number(data.prendas) || 0,
+        deuda: Number(data.deuda) || 0
+      };
+
+      renderEstadoVerificadoPaso1();
+    }
+
+    function renderEstadoVerificadoPaso1() {
+      const dniVal = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
+      const celVal = limpiarCelularWeb(document.getElementById('celular').value);
+      const nomVal = document.getElementById('nombre').value.trim();
+
+      const tieneDni = /^\d{8}$/.test(dniVal);
+      const tieneCel = /^9\d{8}$/.test(celVal);
+      const tieneNom = nomVal.length >= 3 && !/^cel:\s*9\d{8}$/i.test(nomVal);
+      const tieneDir = Boolean(datosVerificados && datosVerificados.destino);
+
+      document.getElementById('bannerGuiaPaso1').classList.add('hidden');
+      document.getElementById('cardClienteVerificado').classList.remove('hidden');
+      document.getElementById('verifTitulo').innerText = `✅ ¡Hola, ${nombreOficialDetectado || nomVal || 'clienta'}!`;
+
+      // Una vez validada, se ocultan los botones Buscar para que al editar celular/DNI nunca pierda la vinculación
+      document.getElementById('btnBuscarCel').classList.add('hidden');
+      document.getElementById('btnBuscarDni').classList.add('hidden');
+
+      const badgePr = document.getElementById('verifBadgePrendas');
+      if (datosVerificados && datosVerificados.prendas > 0) {
+        badgePr.innerText = `🛍️ ${datosVerificados.prendas} prenda(s)`;
+        badgePr.classList.remove('hidden');
+      } else {
+        badgePr.classList.add('hidden');
+      }
+
+      let filas = [];
+      if (tieneNom) filas.push(`<div class="verified-row"><span>Nombre:</span><b>${escHTML(nomVal)}</b></div>`);
+      if (tieneDni) filas.push(`<div class="verified-row"><span>DNI:</span><b>${escHTML(dniVal)}</b></div>`);
+      if (tieneCel) filas.push(`<div class="verified-row"><span>Celular:</span><b>${escHTML(celVal)}</b></div>`);
+      if (tieneDir) {
+        const destShow = datosVerificados.empresa ? `${datosVerificados.empresa}: ${datosVerificados.destino}` : datosVerificados.destino;
+        filas.push(`<div class="verified-row"><span>Destino guardado:</span><b>${escHTML(destShow)}</b></div>`);
+      }
+      document.getElementById('verifListaDatos').innerHTML = filas.join('') || '<div style="font-size:12px;color:#475569;">Completa tus datos faltantes abajo para actualizar tu ficha.</div>';
+
+      // Mostrar solo campos en blanco (o todos si activó "Modificar mis datos")
+      const mostrarCel = modoEdicionPaso1 || !tieneCel;
+      const mostrarDni = modoEdicionPaso1 || !tieneDni;
+      const mostrarNom = modoEdicionPaso1 || !tieneNom;
+
+      document.getElementById('wrap-celular').classList.toggle('hidden', !mostrarCel);
+      document.getElementById('wrap-dni').classList.toggle('hidden', !mostrarDni);
+      document.getElementById('wrap-nombre').classList.toggle('hidden', !mostrarNom);
+
+      document.getElementById('tag-falta-cel').classList.toggle('hidden', tieneCel);
+      document.getElementById('tag-falta-dni').classList.toggle('hidden', tieneDni);
+      document.getElementById('tag-falta-nom').classList.toggle('hidden', tieneNom);
+
+      document.getElementById('btnToggleEditPaso1').innerText = modoEdicionPaso1 ? '👁️ Ocultar campos completos' : '✏️ Modificar mis datos';
+
+      const faltanDatos = (!tieneCel || !tieneDni || !tieneNom);
+      const btnMain = document.getElementById('btnVerificar');
+      if (modoEdicionPaso1) {
+        btnMain.innerText = '✅ Guardar cambios y Continuar ➡️';
+      } else if (faltanDatos) {
+        btnMain.innerText = '✅ Completar datos y Continuar ➡️';
+      } else {
+        btnMain.innerText = '➡️ Continuar a Destino y Fecha';
+      }
+    }
+
+    function toggleEditarDatosPaso1() {
+      modoEdicionPaso1 = !modoEdicionPaso1;
+      renderEstadoVerificadoPaso1();
+    }
+
+    function reiniciarBusquedaPaso1() {
+      clienteVerificadoEnExcel = false;
+      nombreOficialDetectado = '';
+      datosVerificados = null;
+      modoEdicionPaso1 = false;
+      usarDireccionGuardada = false;
+      paso2Inicializado = false;
+      intentosVerificacion = 0;
+      claveUltimoIntento = '';
+
+      document.getElementById('celular').value = '';
+      document.getElementById('dni').value = '';
+      document.getElementById('nombre').value = '';
+
+      document.getElementById('bannerGuiaPaso1').classList.remove('hidden');
+      document.getElementById('cardClienteVerificado').classList.add('hidden');
+      document.getElementById('wrap-celular').classList.remove('hidden');
+      document.getElementById('wrap-dni').classList.remove('hidden');
+      document.getElementById('wrap-nombre').classList.remove('hidden');
+      document.getElementById('btnBuscarCel').classList.remove('hidden');
+      document.getElementById('btnBuscarDni').classList.remove('hidden');
+      document.getElementById('tag-falta-cel').classList.add('hidden');
+      document.getElementById('tag-falta-dni').classList.add('hidden');
+      document.getElementById('tag-falta-nom').classList.add('hidden');
+      document.getElementById('btnVerificar').innerText = '🔍 Confirmar y Continuar';
+      ocultarAlerta();
+      document.getElementById('celular').focus();
+    }
+
     async function verificarDatosPaso1() {
       const dni = document.getElementById('dni').value.replace(/\D/g, '').slice(0, 8);
       const cel = limpiarCelularWeb(document.getElementById('celular').value);
       const nom = document.getElementById('nombre').value.trim();
 
-      if (!/^\d{8}$/.test(dni)) return mostrarAlerta('⚠️ El DNI debe tener exactamente 8 números.', 'error');
       if (!/^9\d{8}$/.test(cel)) return mostrarAlerta('⚠️ El celular debe tener 9 dígitos y empezar con 9.', 'error');
+      if (!/^\d{8}$/.test(dni)) return mostrarAlerta('⚠️ El DNI debe tener exactamente 8 números.', 'error');
       if (!nom || nom.length < 3) return mostrarAlerta('⚠️ Ingresa tu nombre y apellidos completos.', 'error');
+
+      // Si ya fue validada con Buscar, conserva su vinculación y pasa al Paso 2 (guardando cualquier edición al finalizar)
+      if (clienteVerificadoEnExcel) {
+        if (datosVerificados) {
+          datosVerificados.dni = dni;
+          datosVerificados.celular = cel;
+          datosVerificados.nombreRecojo = nom;
+        }
+        prepararPaso2(`✅ Verificada: ${nombreOficialDetectado || nom}`);
+        return;
+      }
 
       const claveActual = `${dni}|${cel}|${nom.toLowerCase()}`;
       if (claveActual !== claveUltimoIntento) {
@@ -431,34 +851,31 @@
           celular: cel,
           nombreCompleto: nom
         }).toString();
-        const resp = await fetch(`${URL_BACKEND}?${qs}`, {
-          method: 'GET',
-          redirect: 'follow'
-        });
+        const resp = await fetch(`${URL_BACKEND}?${qs}`, { method: 'GET', redirect: 'follow' });
         const data = JSON.parse(await resp.text());
         btn.disabled = false;
-        btn.innerText = '🔍 Confirmar mis Datos';
+        btn.innerText = '🔍 Confirmar y Continuar';
 
         if (data && data.wspTienda) wspTiendaBackend = limpiarCelularWeb(data.wspTienda);
 
         if (data && data.encontrado) {
-          clienteVerificadoEnExcel = true;
-          nombreOficialDetectado = data.clienteOficial || nom;
-          pasarAPaso2(`✅ Verificada: ${nombreOficialDetectado}`);
+          aplicarDatosClienteEncontrado(data, cel, dni, true);
+          prepararPaso2(`✅ Verificada: ${nombreOficialDetectado || nom}`);
         } else {
           intentosVerificacion++;
           if (intentosVerificacion === 1) {
-            mostrarAlerta('⚠️ No encontramos tu registro con estos datos. Revisa que tu DNI, celular o nombre estén bien escritos y vuelve a presionar el botón.', 'warn');
+            mostrarAlerta('⚠️ No encontramos tu registro con estos datos. Asegúrate de haber colocado el número con el que nos escribiste o pasaste en el Live, y vuelve a presionar el botón.', 'warn');
             btn.innerText = '✔️ Mis datos están correctos (Continuar)';
           } else {
             clienteVerificadoEnExcel = false;
             nombreOficialDetectado = nom;
-            pasarAPaso2(`👤 Clienta: ${nom}`);
+            datosVerificados = null;
+            prepararPaso2(`👤 Clienta: ${nom}`);
           }
         }
       } catch (err) {
         btn.disabled = false;
-        btn.innerText = '🔍 Confirmar mis Datos';
+        btn.innerText = '🔍 Confirmar y Continuar';
         intentosVerificacion++;
         if (intentosVerificacion === 1) {
           mostrarAlerta('⚠️ Revisa tus datos y vuelve a tocar el botón para continuar.', 'warn');
@@ -466,18 +883,66 @@
         } else {
           clienteVerificadoEnExcel = false;
           nombreOficialDetectado = nom;
-          pasarAPaso2(`👤 Clienta: ${nom}`);
+          datosVerificados = null;
+          prepararPaso2(`👤 Clienta: ${nom}`);
         }
       }
     }
 
-    function pasarAPaso2(textoBarra) {
+    function prepararPaso2(textoBarra) {
       ocultarAlerta();
       document.getElementById('seccionPaso1').classList.add('hidden');
       document.getElementById('seccionPaso2').classList.remove('hidden');
       document.getElementById('pill-paso1').classList.remove('activo');
       document.getElementById('pill-paso2').classList.add('activo');
       document.getElementById('txtResumenCliente').innerText = textoBarra;
+
+      // Si ya configuró su destino en el Paso 2 y solo volvió a editar un dato en Paso 1, respetamos su elección
+      if (paso2Inicializado) return;
+      paso2Inicializado = true;
+
+      const tieneDirGuardada = Boolean(datosVerificados && datosVerificados.destino);
+      if (tieneDirGuardada) {
+        activarEdicionDireccionPaso2(false);
+      } else {
+        usarDireccionGuardada = false;
+        document.getElementById('bloqueDireccionGuardada').classList.add('hidden');
+        document.getElementById('bloqueEditarDestino').classList.remove('hidden');
+        document.getElementById('wrapVolverDirGuardada').classList.add('hidden');
+        cambiarModalidadUI(document.getElementById('selModalidad').value || 'Shalom');
+      }
+    }
+
+    function activarEdicionDireccionPaso2(editar) {
+      const tieneDirGuardada = Boolean(datosVerificados && datosVerificados.destino);
+      if (!editar && tieneDirGuardada) {
+        usarDireccionGuardada = true;
+        modalidadActual = datosVerificados.empresa || detectarModalidadDesdeEmpresa(datosVerificados.direccion);
+        document.getElementById('txtDirGuardadaDetalle').innerHTML =
+          `<b>🚚 ${escHTML(modalidadActual)}</b><br>${escHTML(datosVerificados.destino)}` +
+          (datosVerificados.gpsUrl ? `<br><span style="color:#0f766e;font-weight:700;">🗺️ Ubicación GPS guardada</span>` : '');
+        document.getElementById('bloqueDireccionGuardada').classList.remove('hidden');
+        document.getElementById('bloqueEditarDestino').classList.add('hidden');
+        document.getElementById('bloqueFechaHuanuco').classList.toggle('hidden', modalidadActual !== 'Delivery Huánuco');
+        document.getElementById('bloqueFechaAgencia').classList.toggle('hidden', modalidadActual === 'Delivery Huánuco');
+      } else {
+        usarDireccionGuardada = false;
+        document.getElementById('bloqueDireccionGuardada').classList.add('hidden');
+        document.getElementById('bloqueEditarDestino').classList.remove('hidden');
+        document.getElementById('wrapVolverDirGuardada').classList.toggle('hidden', !tieneDirGuardada);
+        const modSug = tieneDirGuardada ? (datosVerificados.empresa || 'Shalom') : 'Shalom';
+        document.getElementById('selModalidad').value = modSug;
+        cambiarModalidadUI(modSug);
+        if (tieneDirGuardada) {
+          if (modSug === 'Delivery Huánuco' && !document.getElementById('huanucoDireccion').value) {
+            document.getElementById('huanucoDireccion').value = datosVerificados.destino;
+            if (datosVerificados.gpsUrl) gpsLinkCapturado = datosVerificados.gpsUrl;
+          } else if (modSug === 'Olva Courier' && !document.getElementById('olvaDireccion').value) {
+            document.getElementById('olvaDireccion').value = datosVerificados.destino;
+          }
+        }
+      }
+      ocultarAlerta();
     }
 
     function volverAPaso1() {
@@ -486,6 +951,10 @@
       document.getElementById('seccionPaso1').classList.remove('hidden');
       document.getElementById('pill-paso2').classList.remove('activo');
       document.getElementById('pill-paso1').classList.add('activo');
+      if (clienteVerificadoEnExcel) {
+        modoEdicionPaso1 = true;
+        renderEstadoVerificadoPaso1();
+      }
     }
 
     function cambiarModalidadUI(val) {
@@ -493,6 +962,7 @@
       document.getElementById('bloqueShalom').classList.toggle('hidden', val !== 'Shalom');
       document.getElementById('bloqueOlva').classList.toggle('hidden', val !== 'Olva Courier');
       document.getElementById('bloqueHuanuco').classList.toggle('hidden', val !== 'Delivery Huánuco');
+      document.getElementById('bloqueFechaHuanuco').classList.toggle('hidden', val !== 'Delivery Huánuco');
       document.getElementById('bloqueFechaAgencia').classList.toggle('hidden', val === 'Delivery Huánuco');
       ocultarAlerta();
     }
@@ -504,7 +974,7 @@
     function inicializarDepartamentosShalom() {
       const deps = [...new Set(CATALOGO_SHALOM.map(x => x.dep))].sort();
       const selDep = document.getElementById('shlDep');
-      selDep.innerHTML = '<option value="">Selecciona departamento...</option>' + deps.map(d => `<option value="${d}">${d}</option>`).join('');
+      selDep.innerHTML = '<option value="">Selecciona departamento...</option>' + deps.map(d => `<option value="${escHTML(d)}">${escHTML(d)}</option>`).join('');
     }
 
     function alCambiarDepartamento() {
@@ -525,7 +995,7 @@
       }
 
       const provs = [...new Set(CATALOGO_SHALOM.filter(x => x.dep === dep).map(x => x.prov))].sort();
-      selProv.innerHTML = '<option value="">Selecciona provincia...</option>' + provs.map(p => `<option value="${p}">${p}</option>`).join('');
+      selProv.innerHTML = '<option value="">Selecciona provincia...</option>' + provs.map(p => `<option value="${escHTML(p)}">${escHTML(p)}</option>`).join('');
       selProv.disabled = false;
       selAg.innerHTML = '<option value="">Selecciona agencia...</option>';
       selAg.disabled = true;
@@ -548,7 +1018,7 @@
 
       const ags = CATALOGO_SHALOM.filter(x => x.dep === dep && x.prov === prov);
       selAg.innerHTML = '<option value="">Selecciona agencia...</option>' + ags.map(a =>
-        `<option value="${a.dist}|||${a.sede}">${a.dist} / ${a.sede}</option>`
+        `<option value="${escHTML(a.dist)}|||${escHTML(a.sede)}">${escHTML(a.dist)} / ${escHTML(a.sede)}</option>`
       ).join('');
       selAg.disabled = false;
     }
@@ -576,7 +1046,6 @@
         boxServ.classList.add('hidden');
         return;
       }
-      // Regla: 100% tienen Terrestre. Aéreo siempre aparece (Confirmado o Por confirmar).
       if (obj.aereoConf) {
         selServ.innerHTML = '<option value="Terrestre">🚚 Terrestre (Normal)</option><option value="Aéreo">✈️ Aéreo</option>';
       } else {
@@ -599,9 +1068,9 @@
       avisoAer.classList.toggle('hidden', !esPorConfirmar);
 
       const o = agenciaSeleccionadaObj;
-      card.innerHTML = `<b>✅ Agencia seleccionada:</b><br>${o.dep} / ${o.prov} / ${o.dist} / <b>${o.sede}</b>` +
-        (o.dirEx ? `<br>📍 ${o.dirEx}` : '') +
-        `<br>📦 Servicio: <b>${tipo}</b>`;
+      card.innerHTML = `<b>✅ Agencia seleccionada:</b><br>${escHTML(o.dep)} / ${escHTML(o.prov)} / ${escHTML(o.dist)} / <b>${escHTML(o.sede)}</b>` +
+        (o.dirEx ? `<br>📍 ${escHTML(o.dirEx)}` : '') +
+        `<br>📦 Servicio: <b>${escHTML(tipo)}</b>`;
       card.classList.remove('hidden');
     }
 
@@ -627,8 +1096,8 @@
 
       box.innerHTML = matches.map(a => `
         <div class="search-item" onclick="elegirDesdeBusquedaRapida(${CATALOGO_SHALOM.indexOf(a)})">
-          <div class="search-item-title">${a.dep} / ${a.prov} / ${a.dist} / ${a.sede}</div>
-          ${a.dirEx ? `<div class="search-item-addr">📍 ${a.dirEx}</div>` : ''}
+          <div class="search-item-title">${escHTML(a.dep)} / ${escHTML(a.prov)} / ${escHTML(a.dist)} / ${escHTML(a.sede)}</div>
+          ${a.dirEx ? `<div class="search-item-addr">📍 ${escHTML(a.dirEx)}</div>` : ''}
           <span class="search-item-badge ${a.aereoConf ? '' : 'warn'}">${a.aereoConf ? '🚚 Terrestre / ✈️ Aéreo' : '🚚 Terrestre / ⚠️ Aéreo por confirmar'}</span>
         </div>
       `).join('');
@@ -748,10 +1217,14 @@
       const nom = document.getElementById('nombre').value.trim();
 
       let destinoFinal = '';
+      let gpsFinal = '';
       let diaFinal = '';
       let esEmergencia = false;
 
-      if (modalidadActual === 'Shalom') {
+      if (usarDireccionGuardada && datosVerificados && datosVerificados.destino) {
+        destinoFinal = limpiarPrefijoEmpresaLocal(datosVerificados.destino);
+        gpsFinal = datosVerificados.gpsUrl || '';
+      } else if (modalidadActual === 'Shalom') {
         if (!agenciaSeleccionadaObj) return mostrarAlerta('⚠️ Selecciona primero tu agencia Shalom.', 'error');
         const tipoShl = document.getElementById('shlTipoServicio').value;
         const suf = tipoShl === 'Terrestre' ? '' : ` - ${tipoShl.toUpperCase()}`;
@@ -767,6 +1240,7 @@
         const refH = document.getElementById('huanucoReferencia').value.trim();
         if (!dirH && !gpsLinkCapturado) return mostrarAlerta('⚠️ Envía tu ubicación GPS o escribe tu dirección exacta en Huánuco.', 'error');
         destinoFinal = [dirH, refH ? `Ref: ${refH}` : ''].filter(Boolean).join(' | ') || 'Ubicación GPS adjunta';
+        gpsFinal = gpsLinkCapturado;
       }
 
       if (modalidadActual === 'Delivery Huánuco') {
@@ -789,12 +1263,13 @@
 
       const payload = {
         accion: 'guardar_envio',
+        clienteOriginal: clienteVerificadoEnExcel ? nombreOficialDetectado : '',
         dni: dni,
         celular: cel,
         nombreCompleto: nom,
         empresa: modalidadActual,
         destino: destinoFinal,
-        gpsUrl: modalidadActual === 'Delivery Huánuco' ? gpsLinkCapturado : '',
+        gpsUrl: modalidadActual === 'Delivery Huánuco' ? gpsFinal : '',
         diaEnvio: diaFinal,
         esEmergencia: esEmergencia
       };
@@ -821,13 +1296,13 @@
       }
 
       document.getElementById('boxResumenFinal').innerHTML = `
-        <div class="resumen-row"><span>👤</span><div><b>Cliente:</b> ${nom}</div></div>
-        <div class="resumen-row"><span>🪪</span><div><b>DNI:</b> ${dni}</div></div>
-        <div class="resumen-row"><span>📱</span><div><b>Celular:</b> ${cel}</div></div>
-        <div class="resumen-row"><span>🚚</span><div><b>Modalidad:</b> ${modalidadActual}</div></div>
-        <div class="resumen-row"><span>📍</span><div><b>Destino:</b> ${destinoFinal}</div></div>
-        ${(modalidadActual === 'Delivery Huánuco' && gpsLinkCapturado) ? `<div class="resumen-row"><span>🗺️</span><div><b>GPS:</b> Ubicación adjunta</div></div>` : ''}
-        <div class="resumen-row"><span>📅</span><div><b>Fecha de Envío:</b> ${diaFinal}${esEmergencia ? ' (+ S/ 8.00 Emergencia)' : ''}</div></div>
+        <div class="resumen-row"><span>👤</span><div><b>Cliente:</b> ${escHTML(nom)}</div></div>
+        <div class="resumen-row"><span>🪪</span><div><b>DNI:</b> ${escHTML(dni)}</div></div>
+        <div class="resumen-row"><span>📱</span><div><b>Celular:</b> ${escHTML(cel)}</div></div>
+        <div class="resumen-row"><span>🚚</span><div><b>Modalidad:</b> ${escHTML(modalidadActual)}</div></div>
+        <div class="resumen-row"><span>📍</span><div><b>Destino:</b> ${escHTML(destinoFinal)}</div></div>
+        ${(modalidadActual === 'Delivery Huánuco' && gpsFinal) ? `<div class="resumen-row"><span>🗺️</span><div><b>GPS:</b> Ubicación adjunta</div></div>` : ''}
+        <div class="resumen-row"><span>📅</span><div><b>Fecha de Envío:</b> ${escHTML(diaFinal)}${esEmergencia ? ' (+ S/ 8.00 Emergencia)' : ''}</div></div>
       `;
 
       const lineas = [
@@ -839,8 +1314,8 @@
         `🚚 *Modalidad:* ${modalidadActual}`,
         `📍 *Destino:* ${destinoFinal}`
       ];
-      if (modalidadActual === 'Delivery Huánuco' && gpsLinkCapturado) {
-        lineas.push(`🗺️ *Ubicación GPS:* ${gpsLinkCapturado}`);
+      if (modalidadActual === 'Delivery Huánuco' && gpsFinal) {
+        lineas.push(`🗺️ *Ubicación GPS:* ${gpsFinal}`);
       }
       if (modalidadActual === 'Delivery Huánuco') {
         lineas.push(`📅 *Fecha solicitada:* ${diaFinal}`);
